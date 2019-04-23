@@ -1,5 +1,5 @@
 
-package producerconsumer;
+package finalProject;
 
 import java.util.Random;
 import java.util.logging.Level;

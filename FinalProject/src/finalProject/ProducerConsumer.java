@@ -1,5 +1,5 @@
 
-package producerconsumer;
+package finalProject;
 
 public class ProducerConsumer {
 
