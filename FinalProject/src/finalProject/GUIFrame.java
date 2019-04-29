@@ -73,8 +73,18 @@ public class GUIFrame extends javax.swing.JFrame {
         jLabel5.setText("Tiempo de Espera (ms)");
 
         productoresEsperaField.setText("0");
+        productoresEsperaField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productoresEsperaFieldActionPerformed(evt);
+            }
+        });
 
         consumidoresEsperaField.setText("0");
+        consumidoresEsperaField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consumidoresEsperaFieldActionPerformed(evt);
+            }
+        });
 
         bufferTextField.setText("1");
         bufferTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -329,8 +339,15 @@ public class GUIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void StartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButtonActionPerformed
-        // TODO add your handling code here:
-        
+        if(isValid(productoresEsperaField)&&isValid(consumidoresEsperaField)&&isValid(bufferTextField)){
+            Buffer buffer = new Buffer();
+
+            Producer producer = new Producer(buffer);
+            producer.start();
+
+            Consumer consumer = new Consumer(buffer);
+            consumer.start();
+        }
     }//GEN-LAST:event_StartButtonActionPerformed
 
     private void StopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopButtonActionPerformed
@@ -349,7 +366,15 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_plusCheckActionPerformed
 
-    private boolean isInteger(JTextField field){
+    private void productoresEsperaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productoresEsperaFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_productoresEsperaFieldActionPerformed
+
+    private void consumidoresEsperaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumidoresEsperaFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_consumidoresEsperaFieldActionPerformed
+
+    private boolean isValid(JTextField field){
         
         Integer num;
         String text = field.getText();
