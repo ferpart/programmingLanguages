@@ -62,8 +62,8 @@ public class GUIFrame extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jSpinner4 = new javax.swing.JSpinner();
-        StartButton = new javax.swing.JButton();
-        StopButton = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -289,21 +289,21 @@ public class GUIFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Procesos", jPanel3);
 
-        StartButton.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        StartButton.setForeground(new java.awt.Color(0, 102, 51));
-        StartButton.setText("INICIAR");
-        StartButton.addActionListener(new java.awt.event.ActionListener() {
+        startButton.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        startButton.setForeground(new java.awt.Color(0, 102, 51));
+        startButton.setText("INICIAR");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StartButtonActionPerformed(evt);
+                startButtonActionPerformed(evt);
             }
         });
 
-        StopButton.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
-        StopButton.setForeground(new java.awt.Color(232, 15, 14));
-        StopButton.setText("STOP");
-        StopButton.addActionListener(new java.awt.event.ActionListener() {
+        stopButton.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
+        stopButton.setForeground(new java.awt.Color(232, 15, 14));
+        stopButton.setText("STOP");
+        stopButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StopButtonActionPerformed(evt);
+                stopButtonActionPerformed(evt);
             }
         });
 
@@ -316,9 +316,9 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(StopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -328,16 +328,18 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(StartButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(StopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void StartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButtonActionPerformed
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         if(isAcceptable()){
+            startButton.setEnabled(false);
+            
             Buffer buffer = new Buffer();
 
             Producer producer = new Producer(buffer);
@@ -346,11 +348,11 @@ public class GUIFrame extends javax.swing.JFrame {
             Consumer consumer = new Consumer(buffer);
             consumer.start();
         }
-    }//GEN-LAST:event_StartButtonActionPerformed
+    }//GEN-LAST:event_startButtonActionPerformed
 
-    private void StopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopButtonActionPerformed
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_StopButtonActionPerformed
+    }//GEN-LAST:event_stopButtonActionPerformed
 
     private void bufferTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bufferTextFieldActionPerformed
         // TODO add your handling code here:
@@ -515,8 +517,6 @@ public class GUIFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton StartButton;
-    private javax.swing.JButton StopButton;
     private javax.swing.JTextField bufferTextField;
     private javax.swing.JTextField consumidoresEsperaField;
     private javax.swing.JCheckBox divideCheck;
@@ -547,6 +547,8 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JTextField productoresEsperaField;
     private javax.swing.JComboBox<String> rangoValoresM;
     private javax.swing.JComboBox<String> rangoValoresN;
+    private javax.swing.JButton startButton;
+    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 
 }
