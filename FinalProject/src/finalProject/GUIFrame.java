@@ -451,36 +451,6 @@ public class GUIFrame extends javax.swing.JFrame {
         }
     }
     
-/*
-    private boolean isInteger(JSpinner spinner){
-        
-        Integer num;
-        String text = spinner.getValue().toString();
-        String name = spinner.getName();
-        
-        try{
-            num = Integer.parseInt(text);
-        } catch (NumberFormatException e){
-            System.out.println(text + "is not a valuable input");
-            return false;
-        }
-        
-        switch (name) {
-            case "productoresSpinner":
-                return num >=1 && num <=10;
-            case "consumidoresSpinner":
-                return num >=1 && num <=10;
-            case "rangoEndSpinner":
-                if (rangoInicial<num){
-                    return true;
-                }else {
-                    System.out.println("Starting value is larger than end value");
-                    return false;
-                }
-        }
-        return false;  
-    }*/
-    
     /**
      * @param args the command line arguments
      */
