@@ -2,6 +2,7 @@ package finalProject;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -358,20 +359,27 @@ public class GUIFrame extends javax.swing.JFrame {
             num = Integer.parseInt(text);
         } catch (NumberFormatException e){
             System.out.println(text + "is not a valuable input");
+            JOptionPane.showMessageDialog(this, "Error: Not a number!", "NotNumber Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         switch(name){
             case "productoresEsperaField":
                 if (num >=0 && num <=10000){
                     return true;
+                }else{
+                    JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n0-10000", "NumberIncorrectError", JOptionPane.ERROR_MESSAGE);
                 }
             case "consumidoresEsperaField":
                 if (num >=0 && num <=10000){
                     return true;
+                }else{
+                    JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n0-10000", "NumberIncorrectError", JOptionPane.ERROR_MESSAGE);
                 }
             case "bufferTextField":
                 if(num >=1 && num<=100){
                     return true;
+                }else{
+                    JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n1-100", "NumberIncorrectError", JOptionPane.ERROR_MESSAGE);
                 }
         }
         return false;
