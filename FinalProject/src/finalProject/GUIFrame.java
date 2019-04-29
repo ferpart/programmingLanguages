@@ -1,9 +1,7 @@
 package finalProject;
 
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 /*
@@ -339,7 +337,7 @@ public class GUIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void StartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButtonActionPerformed
-        if(isValid(productoresEsperaField)&&isValid(consumidoresEsperaField)&&isValid(bufferTextField)){
+        if(isAcceptable()){
             Buffer buffer = new Buffer();
 
             Producer producer = new Producer(buffer);
@@ -374,40 +372,66 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_consumidoresEsperaFieldActionPerformed
 
-    private boolean isValid(JTextField field){
+    private boolean isAcceptable(){
+        
+        boolean resultProd;
+        boolean resultCons;
+        boolean resultBuff;
         
         Integer num;
-        String text = field.getText();
-        String name = field.getName();
+        
+        String text;
+        
+        JTextField productores = productoresEsperaField;
+        JTextField consumidores = consumidoresEsperaField;
+        JTextField buffer = bufferTextField;
+        
+        text = productores.getText();
+                          
+        try{
+            num = Integer.parseInt((String) text);
+            if (num >=0 && num <=10000){
+                resultProd = true;
+            }else{
+                JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n0-10000", "ProductorNumberIncorrectError", JOptionPane.ERROR_MESSAGE);
+                resultProd = false;
+            }
+        } catch (NumberFormatException e){ 
+            JOptionPane.showMessageDialog(this, "Error: Not a number!", "ProductorNotNumberError", JOptionPane.ERROR_MESSAGE);
+            resultProd = false;
+        }
+        
+        text = consumidores.getText();        
         
         try{
-            num = Integer.parseInt(text);
+            num = Integer.parseInt((String) text);
+            if (num >=0 && num <=10000){
+                resultCons = true;
+            }else{
+                JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n0-10000", "ConsumidorNumberIncorrectError", JOptionPane.ERROR_MESSAGE);
+                resultCons = false;
+            }
         } catch (NumberFormatException e){
-            System.out.println(text + "is not a valuable input");
-            JOptionPane.showMessageDialog(this, "Error: Not a number!", "NotNumber Error", JOptionPane.ERROR_MESSAGE);
-            return false;
+            JOptionPane.showMessageDialog(this, "Error: Not a number!", "ConsumidorNotNumberError", JOptionPane.ERROR_MESSAGE);
+            resultCons = false;
         }
-        switch(name){
-            case "productoresEsperaField":
-                if (num >=0 && num <=10000){
-                    return true;
-                }else{
-                    JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n0-10000", "NumberIncorrectError", JOptionPane.ERROR_MESSAGE);
-                }
-            case "consumidoresEsperaField":
-                if (num >=0 && num <=10000){
-                    return true;
-                }else{
-                    JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n0-10000", "NumberIncorrectError", JOptionPane.ERROR_MESSAGE);
-                }
-            case "bufferTextField":
-                if(num >=1 && num<=100){
-                    return true;
-                }else{
-                    JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n1-100", "NumberIncorrectError", JOptionPane.ERROR_MESSAGE);
-                }
+
+        text = buffer.getText();
+        
+        try{
+            num = Integer.parseInt((String) text);
+            if(num >=1 && num<=100){
+                resultBuff = true;
+            }else{
+                JOptionPane.showMessageDialog(this, "Error: Number not within range\n Hint:\n1-100", "BufferNumberIncorrectError", JOptionPane.ERROR_MESSAGE);
+                resultBuff = false;
+            }
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Error: Not a number!", "BufferNotNumberError", JOptionPane.ERROR_MESSAGE);
+            resultBuff = false;
         }
-        return false;
+        
+        return resultProd && resultCons && resultBuff && isBigger();             
     }
     
     private boolean isBigger(){
@@ -417,8 +441,12 @@ public class GUIFrame extends javax.swing.JFrame {
         Integer valueN = Integer.parseInt((String) rangoN.getSelectedItem());
         Integer valueM = Integer.parseInt((String) rangoM.getSelectedItem());
         
-        return valueN <= valueM;
-       
+        if (valueM < valueN){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(this, "ERROR: Value N can't be bigger than value M", "ERRORNotValidInput", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
     }
     
 /*
