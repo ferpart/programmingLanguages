@@ -22,7 +22,7 @@ public class Producer extends Thread {
     }
     
     @Override
-    public void run() {
+    public synchronized void run() {
         System.out.println("Running Producer...");
         Random r = new Random(System.currentTimeMillis());
         Operation product;
