@@ -16,9 +16,9 @@ public class Operation {
     private Integer id;
     private String operationString;
     
-    public Operation(String operationString){
+    public Operation(String operationString, Integer id){
         this.operationString = operationString;
-        this.id = 1;
+        this.id = id;
     };
 
     public Integer getId() {

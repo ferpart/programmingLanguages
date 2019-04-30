@@ -1,43 +1,44 @@
 
 package finalProject;
 
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Buffer {
     
-    private char buffer;
+    private int capacity;
+    private LinkedList<Operation> buffer = new LinkedList<>(); 
     
-    Buffer() {
-        this.buffer = 0;
+    Buffer(int capacity) {
+        this.capacity = capacity;
     }
     
-    synchronized char consume() {
-        char product = 0;
+    synchronized Operation consume() {
+        Operation product = null;
         
-        if(this.buffer == 0) {
+        if(this.getBufferSize() == 0) {
             try {
-                wait(1000);
+                wait();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        product = this.buffer;
-        this.buffer = 0;
+        product = this.getBuffer().removeFirst();
         notify();
         
         return product;
     }
     
-    synchronized void produce(char product) {
-        if(this.buffer != 0) {
+    synchronized void produce(Operation product) {
+        if(this.getBufferSize() == this.getCapacity()) {
             try {
-                wait(1000);
+                wait();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        this.buffer = product;
+        this.getBuffer().add(product);
         
         notify();
     }
@@ -47,5 +48,25 @@ public class Buffer {
         System.out.print(count++ + " ");
         System.out.println(string);
     }
+
+    /**
+     * @return the capacity
+     */
+    public int getCapacity() {
+        return capacity;
+    }
+
+    /**
+     * @return the buffer
+     */
+    public LinkedList<Operation> getBuffer() {
+        return buffer;
+    }
     
+    /**
+     * @return the buffer size
+     */
+    public int getBufferSize() {
+        return buffer.size();
+    }
 }

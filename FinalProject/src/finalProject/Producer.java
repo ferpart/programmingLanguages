@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Producer extends Thread {
+    static int id = 0;
     Buffer buffer;
     String operadores;
     int min;
@@ -24,26 +25,33 @@ public class Producer extends Thread {
     public void run() {
         System.out.println("Running Producer...");
         Random r = new Random(System.currentTimeMillis());
-        String product;
+        Operation product;
+        String productOp;
         
         while(true) {
-            synchronized (this){ 
-                product = "(";
-                product += operadores.charAt(r.nextInt(operadores.length())) + " ";
-                product += (r.nextInt(max-min+1)+min) + " ";
-                product += (r.nextInt(max-min+1)+min); 
-                product += ")";
-                this.buffer.produce(product);
-                //System.out.println("Producer produced: " + product);
-                Buffer.print("Producer produced: " + product);
+            synchronized (this){
+                synchronized (buffer){
+                    productOp = "(";
+                    productOp += operadores.charAt(r.nextInt(operadores.length())) + " ";
+                    productOp += (r.nextInt(max-min+1)+min) + " ";
+                    productOp += (r.nextInt(max-min+1)+min); 
+                    productOp += ")";
+                    id++;
+                    product = new Operation(productOp, id);
+                    this.buffer.produce(product);
+                    //System.out.println("Producer produced: " + product);
+                    Buffer.print("Producer produced: " + productOp + " id: " + id);
 
-                try {
-                    Thread.sleep(sleep);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                    try {
+                        Thread.sleep(sleep);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
     }
-    
+    public void resetId (){
+        this.id=0;
+    }
 }
