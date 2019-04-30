@@ -17,12 +17,14 @@ import javax.swing.JTextField;
 public class GUIFrame extends javax.swing.JFrame {
     Producer[] producers;
     Consumer[] consumers;
-
+    Buffer buffer;
+    
     /**
      * Creates new form GUIFrame
      */
     public GUIFrame() {
         initComponents();
+        stopButton.setEnabled(false);
     }
 
     /**
@@ -357,6 +359,7 @@ public class GUIFrame extends javax.swing.JFrame {
         if(isAcceptable()){
             startButton.setEnabled(false);
             
+            int capacity = Integer.parseInt((String) bufferTextField.getText());
             int consumerN = Integer.parseInt((String) numConsumidores.getSelectedItem());
             int producerN = Integer.parseInt((String) numProductores.getSelectedItem());
             int min = Integer.parseInt((String) rangoValoresN.getSelectedItem());
@@ -377,7 +380,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 operadores += "*";
             }
             
-            Buffer buffer = new Buffer();
+            buffer = new Buffer(capacity);
             
             producers = new Producer[producerN];
             for(int i=0; i<producers.length; i++){
@@ -391,10 +394,12 @@ public class GUIFrame extends javax.swing.JFrame {
                 consumers[i].start();
             }
             
+            stopButton.setEnabled(true);
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        producers[0].resetId();
         for(int i=0; i<producers.length; i++){
             producers[i].stop();
         }
@@ -402,6 +407,11 @@ public class GUIFrame extends javax.swing.JFrame {
         for(int i=0; i<consumers.length; i++){
             consumers[i].stop();
         }
+        consumers = null;
+        producers = null;
+        buffer = null;
+        startButton.setEnabled(true);
+        stopButton.setEnabled(false);
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void bufferTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bufferTextFieldActionPerformed
