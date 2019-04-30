@@ -14,11 +14,11 @@ package finalProject;
 
 public class Operation {
     private Integer id;
-    private Integer result;
     private String operationString;
     
-    public Operation(String operacion){
-        
+    public Operation(String operationString){
+        this.operationString = operationString;
+        this.id = 1;
     };
 
     public Integer getId() {
@@ -27,14 +27,6 @@ public class Operation {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getResult() {
-        return result;
-    }
-
-    public void setResult(Integer result) {
-        this.result = result;
     }
 
     public String getOperationString() {
