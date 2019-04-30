@@ -4,19 +4,24 @@ package finalProject;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 
 public class Buffer {
     
     private int capacity;
     private LinkedList<Operation> buffer = new LinkedList<>(); 
-    
-    Buffer(int capacity) {
+    private GUIFrame guiReference;
+       
+    Buffer(int capacity, GUIFrame guiReference) {
         this.capacity = capacity;
+        this.guiReference=guiReference;
+        
     }
     
     synchronized Operation consume() {
-        Operation product = null;
         
+        Operation product = null;
+
         if(this.getBufferSize() == 0) {
             try {
                 wait();
@@ -25,6 +30,10 @@ public class Buffer {
             }
         }
         product = this.getBuffer().removeFirst();
+        synchronized (this){
+            guiReference.removeTareasProducerRow();
+            guiReference.setPercentage((this.buffer.size() * 100)/ this.capacity);
+        }
         notify();
         
         return product;
@@ -39,7 +48,10 @@ public class Buffer {
             }
         }
         this.getBuffer().add(product);
-        
+        synchronized (this){
+            guiReference.setTareasProducer(product.getId(), product.getOperationString());
+            guiReference.setPercentage((this.buffer.size() * 100)/ this.capacity);
+        }
         notify();
     }
     

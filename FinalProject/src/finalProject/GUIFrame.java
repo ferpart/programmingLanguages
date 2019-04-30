@@ -2,7 +2,9 @@ package finalProject;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,6 +16,7 @@ import javax.swing.JTextField;
  *
  * @author sdegante
  */
+
 public class GUIFrame extends javax.swing.JFrame {
     Producer[] producers;
     Consumer[] consumers;
@@ -59,13 +62,13 @@ public class GUIFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tareasProducer = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tareasConsumer = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jSpinner4 = new javax.swing.JSpinner();
+        progeressBar = new javax.swing.JProgressBar();
+        operationsCounter = new javax.swing.JSpinner();
         startButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
 
@@ -239,37 +242,47 @@ public class GUIFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Configuración", jPanel2);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tareasProducer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Operacion"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tareasProducer);
+
+        tareasConsumer.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Operacion", "Resultado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tareasConsumer);
 
         jLabel7.setText("Tareas por hacer");
 
         jLabel8.setText("Tareas realizadas");
 
-        jProgressBar1.setValue(50);
+        progeressBar.setValue(50);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -278,14 +291,14 @@ public class GUIFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                    .addComponent(progeressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                    .addComponent(jSpinner4))
+                    .addComponent(operationsCounter))
                 .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -296,14 +309,14 @@ public class GUIFrame extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(progeressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(operationsCounter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Procesos", jPanel3);
@@ -357,6 +370,12 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         if(isAcceptable()){
+            
+            tareasProducerModel = (DefaultTableModel) tareasProducer.getModel();
+            tareasConsumerModel = (DefaultTableModel) tareasConsumer.getModel();
+            
+            tareasConsumerModel.setRowCount(0);
+            tareasProducerModel.setRowCount(0);
             startButton.setEnabled(false);
             
             int capacity = Integer.parseInt((String) bufferTextField.getText());
@@ -380,7 +399,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 operadores += "*";
             }
             
-            buffer = new Buffer(capacity);
+            buffer = new Buffer(capacity, this);
             
             producers = new Producer[producerN];
             for(int i=0; i<producers.length; i++){
@@ -390,16 +409,19 @@ public class GUIFrame extends javax.swing.JFrame {
            
             consumers = new Consumer[consumerN];
             for(int i=0; i<consumers.length; i++){
-                consumers[i] = new Consumer(buffer, sleepC);
+                consumers[i] = new Consumer(buffer, sleepC, this);
                 consumers[i].start();
             }
             
             stopButton.setEnabled(true);
+            
+            
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         producers[0].resetId();
+        consumers[0].resetCounter();
         for(int i=0; i<producers.length; i++){
             producers[i].stop();
         }
@@ -407,11 +429,13 @@ public class GUIFrame extends javax.swing.JFrame {
         for(int i=0; i<consumers.length; i++){
             consumers[i].stop();
         }
+        
         consumers = null;
         producers = null;
         buffer = null;
         startButton.setEnabled(true);
         stopButton.setEnabled(false);
+    
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void bufferTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bufferTextFieldActionPerformed
@@ -522,7 +546,28 @@ public class GUIFrame extends javax.swing.JFrame {
             return false;
         }
     }
+
+    public synchronized void setTareasProducer(int id, String data) {
+        tareasProducerModel.addRow(new Object[]{id, data});
+    }
     
+    public synchronized void removeTareasProducerRow(){
+        tareasProducerModel.removeRow(0);
+    }
+    
+    public synchronized void setTareasConsumer(int id, String data, String result){
+        tareasConsumerModel.addRow(new Object[]{id, data, result});
+    }
+    
+    public synchronized void setPercentage(int value){
+        progeressBar.setValue(value);
+    }
+    
+    public synchronized void setOperationsCounter(int value){
+        operationsCounter.setValue(value);
+    }
+    
+      
     /**
      * @param args the command line arguments
      */
@@ -557,6 +602,9 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
     }
+    
+    private DefaultTableModel tareasProducerModel;
+    private DefaultTableModel tareasConsumerModel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bufferTextField;
@@ -574,23 +622,23 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JCheckBox minusCheck;
     private javax.swing.JCheckBox multiplyCheck;
     private javax.swing.JComboBox<String> numConsumidores;
     private javax.swing.JComboBox<String> numProductores;
+    private javax.swing.JSpinner operationsCounter;
     private javax.swing.JCheckBox plusCheck;
     private javax.swing.JTextField productoresEsperaField;
+    private javax.swing.JProgressBar progeressBar;
     private javax.swing.JComboBox<String> rangoValoresM;
     private javax.swing.JComboBox<String> rangoValoresN;
     private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
+    private javax.swing.JTable tareasConsumer;
+    private javax.swing.JTable tareasProducer;
     // End of variables declaration//GEN-END:variables
 
 }

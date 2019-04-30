@@ -6,16 +6,19 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Consumer extends Thread {
-    Buffer buffer;
-    int sleep;
+    private Buffer buffer;
+    private int sleep;
+    private static int counter = 0;
+    private GUIFrame guiReference;
     
-    Consumer(Buffer buffer, int sleep) {
+    Consumer(Buffer buffer, int sleep, GUIFrame guiReference) {
         this.buffer = buffer;
         this.sleep = sleep;
+        this.guiReference = guiReference;
     }
     
     @Override
-    public void run() {
+    public synchronized void run() {
         System.out.println("Running Consumer...");
         Operation product;
         
@@ -39,13 +42,17 @@ public class Consumer extends Thread {
                             break;
                         case '/' :
                             if(Character.getNumericValue(productOp.charAt(5))==0){
-                                JOptionPane.showMessageDialog(null, "Error: Can't divide by 0!", "DivideByZeroError", JOptionPane.ERROR_MESSAGE);
+                                //JOptionPane.showMessageDialog(null, "Error: Can't divide by 0!", "DivideByZeroError", JOptionPane.ERROR_MESSAGE);
+                                result = "Can't divide by 0";
                             }else{
                                 result = String.valueOf((float)Character.getNumericValue(productOp.charAt(3))/Character.getNumericValue(productOp.charAt(5)));
                             }
                             break;
                     }
                     Buffer.print("Consumer consumed: " + result + " " + productOp + " id: " + product.getId());
+                    guiReference.setTareasConsumer(product.getId(), productOp, result);
+                    counter++;
+                    guiReference.setOperationsCounter(counter);
 
                     try {
                         Thread.sleep(sleep);
@@ -55,5 +62,8 @@ public class Consumer extends Thread {
                 }
             }
         }
+    }
+    public void resetCounter (){
+        this.counter=0;
     }
 }
