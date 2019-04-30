@@ -124,12 +124,27 @@ public class GUIFrame extends javax.swing.JFrame {
 
         minusCheck.setSelected(true);
         minusCheck.setText("-");
+        minusCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minusCheckActionPerformed(evt);
+            }
+        });
 
         multiplyCheck.setSelected(true);
         multiplyCheck.setText("*");
+        multiplyCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                multiplyCheckActionPerformed(evt);
+            }
+        });
 
         divideCheck.setSelected(true);
         divideCheck.setText("/");
+        divideCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                divideCheckActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Operadores ");
 
@@ -340,12 +355,30 @@ public class GUIFrame extends javax.swing.JFrame {
         if(isAcceptable()){
             startButton.setEnabled(false);
             
+            int min = Integer.parseInt((String) rangoValoresN.getSelectedItem());
+            int max = Integer.parseInt((String) rangoValoresM.getSelectedItem());
+            int sleepC = Integer.parseInt((String) productoresEsperaField.getText());
+            int sleepP = Integer.parseInt((String) consumidoresEsperaField.getText());
+            String operadores = "";
+            if(plusCheck.isSelected()){
+                operadores += "+";
+            }
+            if(minusCheck.isSelected()){
+                operadores += "-";
+            }
+            if(divideCheck.isSelected()){
+                operadores += "/";
+            }
+            if(multiplyCheck.isSelected()){
+                operadores += "*";
+            }
+            
             Buffer buffer = new Buffer();
 
-            Producer producer = new Producer(buffer);
+            Producer producer = new Producer(buffer, operadores, min, max, sleepP);
             producer.start();
 
-            Consumer consumer = new Consumer(buffer);
+            Consumer consumer = new Consumer(buffer, sleepC);
             consumer.start();
         }
     }//GEN-LAST:event_startButtonActionPerformed
@@ -373,6 +406,18 @@ public class GUIFrame extends javax.swing.JFrame {
     private void consumidoresEsperaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consumidoresEsperaFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_consumidoresEsperaFieldActionPerformed
+
+    private void minusCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusCheckActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_minusCheckActionPerformed
+
+    private void multiplyCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplyCheckActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_multiplyCheckActionPerformed
+
+    private void divideCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divideCheckActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_divideCheckActionPerformed
 
     private boolean isAcceptable(){
         
@@ -437,13 +482,13 @@ public class GUIFrame extends javax.swing.JFrame {
     }
     
     private boolean isBigger(){
-        JComboBox<String> rangoN = this.rangoValoresM;
-        JComboBox<String> rangoM = this.rangoValoresM;
+        JComboBox<String> rangoN = rangoValoresN;
+        JComboBox<String> rangoM = rangoValoresM;
         
         Integer valueN = Integer.parseInt((String) rangoN.getSelectedItem());
         Integer valueM = Integer.parseInt((String) rangoM.getSelectedItem());
         
-        if (valueM < valueN){
+        if (valueM >= valueN){
             return true;
         }else{
             JOptionPane.showMessageDialog(this, "ERROR: Value N can't be bigger than value M", "ERRORNotValidInput", JOptionPane.ERROR_MESSAGE);
