@@ -15,6 +15,8 @@ import javax.swing.JTextField;
  * @author sdegante
  */
 public class GUIFrame extends javax.swing.JFrame {
+    Producer[] producers;
+    Consumer[] consumers;
 
     /**
      * Creates new form GUIFrame
@@ -355,6 +357,8 @@ public class GUIFrame extends javax.swing.JFrame {
         if(isAcceptable()){
             startButton.setEnabled(false);
             
+            int consumerN = Integer.parseInt((String) numConsumidores.getSelectedItem());
+            int producerN = Integer.parseInt((String) numProductores.getSelectedItem());
             int min = Integer.parseInt((String) rangoValoresN.getSelectedItem());
             int max = Integer.parseInt((String) rangoValoresM.getSelectedItem());
             int sleepC = Integer.parseInt((String) productoresEsperaField.getText());
@@ -374,17 +378,30 @@ public class GUIFrame extends javax.swing.JFrame {
             }
             
             Buffer buffer = new Buffer();
-
-            Producer producer = new Producer(buffer, operadores, min, max, sleepP);
-            producer.start();
-
-            Consumer consumer = new Consumer(buffer, sleepC);
-            consumer.start();
+            
+            producers = new Producer[producerN];
+            for(int i=0; i<producers.length; i++){
+                producers[i] = new Producer(buffer, operadores, min, max, sleepP);
+                producers[i].start();
+            }
+           
+            consumers = new Consumer[consumerN];
+            for(int i=0; i<consumers.length; i++){
+                consumers[i] = new Consumer(buffer, sleepC);
+                consumers[i].start();
+            }
+            
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        // TODO add your handling code here:
+        for(int i=0; i<producers.length; i++){
+            producers[i].stop();
+        }
+        
+        for(int i=0; i<consumers.length; i++){
+            consumers[i].stop();
+        }
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void bufferTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bufferTextFieldActionPerformed
