@@ -22,37 +22,24 @@ public class Buffer {
         
         Operation product = null;
 
-        if(this.getBufferSize() == 0) {
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if(this.getBufferSize() != 0) {
+            product = this.getBuffer().removeFirst();
+            synchronized (this){
+                guiReference.removeTareasProducerRow();
+                guiReference.setPercentage((this.buffer.size() * 100)/ this.capacity);
         }
-        product = this.getBuffer().removeFirst();
-        synchronized (this){
-            guiReference.removeTareasProducerRow();
-            guiReference.setPercentage((this.buffer.size() * 100)/ this.capacity);
-        }
-        notify();
         
         return product;
     }
     
     synchronized void produce(Operation product) {
         if(this.getBufferSize() >= this.getCapacity()) {
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
+            this.getBuffer().add(product);
+            synchronized (this){
+                guiReference.setTareasProducer(product.getId(), product.getOperationString());
+                guiReference.setPercentage((this.buffer.size() * 100)/ this.capacity);
             }
         }
-        this.getBuffer().add(product);
-        synchronized (this){
-            guiReference.setTareasProducer(product.getId(), product.getOperationString());
-            guiReference.setPercentage((this.buffer.size() * 100)/ this.capacity);
-        }
-        notify();
     }
     
     static int count = 1;
