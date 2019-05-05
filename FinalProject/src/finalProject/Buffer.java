@@ -40,7 +40,7 @@ public class Buffer {
     }
     
     synchronized void produce(Operation product) {
-        if(this.getBufferSize() == this.getCapacity()) {
+        if(this.getBufferSize() >= this.getCapacity()) {
             try {
                 wait();
             } catch (InterruptedException ex) {
